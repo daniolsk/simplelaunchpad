@@ -48,6 +48,12 @@ export default function Home({ defaultButtons }) {
 		setIsAddingButtonDialog(true);
 	};
 
+	const addButtons = (newButtons) => {
+		setButtons([...buttons, ...newButtons]);
+
+		setIsAddingButtonDialog(false);
+	};
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -73,7 +79,7 @@ export default function Home({ defaultButtons }) {
 					<div className={styles.addNewButton} onClick={handleAddButtonDialog}></div>
 				</div>
 			</div>
-			<AddButton isAddingButtonDialog={isAddingButtonDialog} />
+			<AddButton isAddingButtonDialog={isAddingButtonDialog} addButtons={addButtons} />
 		</div>
 	);
 }
