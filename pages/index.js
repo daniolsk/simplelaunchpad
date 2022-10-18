@@ -1,11 +1,14 @@
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import AddButton from '../components/addButton';
 
 export default function Home({ defaultButtons }) {
 	const [buttons, setButtons] = useState(defaultButtons);
 	const [isAddingButtonDialog, setIsAddingButtonDialog] = useState(false);
+
+	const buttonsRef = useRef(buttons);
+	const isAddingButtonDialogRef = useRef(isAddingButtonDialog);
 
 	useEffect(() => {
 		let tmpButtons = buttons;
@@ -16,16 +19,26 @@ export default function Home({ defaultButtons }) {
 		});
 
 		setButtons(tmpButtons);
+		buttonsRef.current = tmpButtons;
 
 		const handleKeyDown = (e) => {
 			let key = e.key;
 
-			buttons.forEach((btn) => {
-				if (btn.key == key) {
+			if (key == 'Escape') {
+				buttonsRef.current.forEach((btn) => {
+					btn.sound.pause();
 					btn.sound.currentTime = 0;
-					btn.sound.play();
-				}
-			});
+				});
+			}
+
+			if (!isAddingButtonDialogRef.current) {
+				buttonsRef.current.forEach((btn) => {
+					if (btn.key == key) {
+						btn.sound.currentTime = 0;
+						btn.sound.play();
+					}
+				});
+			}
 		};
 
 		document.addEventListener('keydown', handleKeyDown);
@@ -46,12 +59,15 @@ export default function Home({ defaultButtons }) {
 
 	const handleAddButtonDialog = () => {
 		setIsAddingButtonDialog(true);
+		isAddingButtonDialogRef.current = true;
 	};
 
 	const addButtons = (newButtons) => {
 		setButtons([...buttons, ...newButtons]);
+		buttonsRef.current = [...buttons, ...newButtons];
 
 		setIsAddingButtonDialog(false);
+		isAddingButtonDialogRef.current = false;
 	};
 
 	return (

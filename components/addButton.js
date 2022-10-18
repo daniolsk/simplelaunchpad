@@ -14,12 +14,16 @@ export default function addButton({ isAddingButtonDialog, addButtons }) {
 		let buttons = [];
 
 		for (let i = 0; i < selectedFiles.length; i++) {
-			buttons.push({
+			let tmpNewButton = {
 				name: names[i],
 				key: keys[i],
 				soundSrc: URL.createObjectURL(selectedFiles[i]),
 				sound: new Audio(URL.createObjectURL(selectedFiles[i])),
-			});
+			};
+
+			tmpNewButton.sound.volume = 0.7;
+
+			buttons.push(tmpNewButton);
 		}
 
 		addButtons(buttons);
