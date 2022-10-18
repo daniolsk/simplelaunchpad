@@ -33,6 +33,8 @@ export default function Home({ defaultButtons }) {
 				buttonsRef.current.forEach((btn) => {
 					btn.sound.pause();
 					btn.sound.currentTime = 0;
+
+					stopPlayingAll();
 				});
 			}
 
@@ -41,6 +43,12 @@ export default function Home({ defaultButtons }) {
 					if (btn.key == key) {
 						btn.sound.currentTime = 0;
 						btn.sound.play();
+
+						btn.sound.onended = () => {
+							stopPlayingButton(key);
+						};
+
+						setPlayingOnButton(key);
 					}
 				});
 			}
@@ -55,6 +63,41 @@ export default function Home({ defaultButtons }) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const setPlayingOnButton = (key) => {
+		let tmpButtons = [...buttonsRef.current];
+
+		tmpButtons.forEach((btn) => {
+			if (btn.key == key) {
+				btn.playing = true;
+			}
+		});
+
+		setButtons([...tmpButtons]);
+		buttonsRef.current = [...tmpButtons];
+	};
+	const stopPlayingButton = (key) => {
+		let tmpButtons = [...buttonsRef.current];
+
+		tmpButtons.forEach((btn) => {
+			if (btn.key == key) {
+				btn.playing = false;
+			}
+		});
+
+		setButtons([...tmpButtons]);
+		buttonsRef.current = [...tmpButtons];
+	};
+	const stopPlayingAll = () => {
+		let tmpButtons = [...buttonsRef.current];
+
+		tmpButtons.forEach((btn) => {
+			btn.playing = false;
+		});
+
+		setButtons([...tmpButtons]);
+		buttonsRef.current = [...tmpButtons];
+	};
+
 	const handleClick = (key, e) => {
 		if (e.target.id == 'delete-button' || e.target.id == 'delete-button-container') {
 			return;
@@ -64,6 +107,12 @@ export default function Home({ defaultButtons }) {
 			if (btn.key == key) {
 				btn.sound.currentTime = 0;
 				btn.sound.play();
+
+				btn.sound.onended = () => {
+					stopPlayingButton(key);
+				};
+
+				setPlayingOnButton(key);
 			}
 		});
 	};
@@ -123,7 +172,11 @@ export default function Home({ defaultButtons }) {
 			<div className={styles.launchpadContainer}>
 				<div className={styles.launchpad}>
 					{buttons.map((btn) => (
-						<div className={styles.button} onClick={(e) => handleClick(btn.key, e)} key={btn.key}>
+						<div
+							className={`${styles.button} ${btn.playing ? styles.playing : null}`}
+							onClick={(e) => handleClick(btn.key, e)}
+							key={btn.key}
+						>
 							<div className={styles.firstRow}>
 								<div className={styles.key}>{btn.key}</div>
 								<div className={styles.delete} id="delete-button-container" onClick={() => handleDelete(btn.key)}>
@@ -149,10 +202,10 @@ export async function getServerSideProps() {
 	return {
 		props: {
 			defaultButtons: [
-				{ name: 'Clap', key: 'q', soundSrc: '/default_sounds/clap.wav' },
-				{ name: 'HiHat', key: 'w', soundSrc: '/default_sounds/hihat.wav' },
-				{ name: 'Kick', key: 'e', soundSrc: '/default_sounds/kick.wav' },
-				{ name: 'Snare', key: 'r', soundSrc: '/default_sounds/snare.wav' },
+				{ name: 'Clap', key: 'q', soundSrc: '/default_sounds/clap.wav', playing: false },
+				{ name: 'HiHat', key: 'w', soundSrc: '/default_sounds/hihat.wav', playing: false },
+				{ name: 'Kick', key: 'e', soundSrc: '/default_sounds/kick.wav', playing: false },
+				{ name: 'Snare', key: 'r', soundSrc: '/default_sounds/snare.wav', playing: false },
 			],
 		},
 	};

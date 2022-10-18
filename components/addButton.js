@@ -19,6 +19,7 @@ export default function AddButton({ cancel, addButtons }) {
 				key: keys[i],
 				soundSrc: URL.createObjectURL(selectedFiles[i]),
 				sound: new Audio(URL.createObjectURL(selectedFiles[i])),
+				playing: false,
 			};
 
 			tmpNewButton.sound.volume = 0.7;

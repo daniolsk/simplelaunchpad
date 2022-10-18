@@ -45,19 +45,23 @@
 }
 
 .button {
-	background-color: red;
 	width: 200px;
 	height: 200px;
 	padding: 13px;
 	border-radius: 5px;
 	font-size: 1.2em;
 	display: flex;
+	border: 7px solid red;
 	flex-direction: column;
 	cursor: pointer;
 }
 
+.button.playing {
+	background-color: rgb(219, 0, 0) !important;
+}
+
 .button:hover {
-	background-color: rgb(219, 0, 0);
+	background-color: rgb(52, 52, 52);
 }
 
 .firstRow {
