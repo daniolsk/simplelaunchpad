@@ -23,6 +23,10 @@ export default function Home({ defaultButtons }) {
 		buttonsRef.current = tmpButtons;
 
 		const handleKeyDown = (e) => {
+			if (e.repeat) {
+				return;
+			}
+
 			let key = e.key;
 
 			if (key == 'Escape') {
