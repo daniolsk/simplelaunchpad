@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import AddButton from '../components/AddButton';
@@ -122,7 +123,7 @@ export default function Home({ defaultButtons }) {
 							<div className={styles.firstRow}>
 								<div className={styles.key}>{btn.key}</div>
 								<div className={styles.delete} id="delete-button-container" onClick={() => handleDelete(btn.key)}>
-									<img id="delete-button" src="delete.svg" alt="delete" />
+									<Image width={22} height={22} id="delete-button" src="/delete.svg" alt="delete" />
 								</div>
 							</div>
 							<div className={styles.name}>{refactorName(btn.name)}</div>
