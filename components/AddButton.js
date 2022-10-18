@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styles from '../styles/addButton.module.css';
+import styles from '../styles/AddButton.module.css';
 
-export default function AddButton({ isAddingButtonDialog, addButtons }) {
+export default function AddButton({ cancel, addButtons }) {
 	const [selectedFiles, setSelectedFiles] = useState([]);
 	const [isFilePicked, setIsFilePicked] = useState(false);
 
@@ -57,48 +57,49 @@ export default function AddButton({ isAddingButtonDialog, addButtons }) {
 		tmp[i] = e.target.value;
 		setKeys([...tmp]);
 	};
-	if (isAddingButtonDialog) {
-		return (
-			<div className={styles.background}>
-				<div className={styles.dialog}>
+	return (
+		<div className={styles.background}>
+			<div className={styles.dialog}>
+				<div className={styles.row}>
 					<h1>Add sound</h1>
-					<form onSubmit={handleSubmit}>
-						<label htmlFor="sound-input" className={styles.customFileUpload}>
-							Upload file(s)
-						</label>
-						<input onChange={handleFilesUpload} type="file" name="sound" id="sound-input" required multiple />
-						<div className={styles.filesContainer}>
-							{isFilePicked
-								? selectedFiles.map((file, i) => (
-										<div key={file.name} className={styles.file}>
-											<label htmlFor="name">Name:</label>
-											<input
-												value={names[i]}
-												onChange={(e) => handleNameChange(e, i)}
-												type="text"
-												name="name"
-												id="name"
-											/>
-											<label htmlFor="key">Key:</label>
-											<input
-												required
-												value={keys[i]}
-												onChange={(e) => handleKeyChange(e, i)}
-												type="text"
-												name="key"
-												id="key"
-											/>
-											<div className={styles.hLine}></div>
-										</div>
-								  ))
-								: null}
-							{isFilePicked ? <input type="submit" value="Add" /> : null}
-						</div>
-					</form>
+					<div onClick={() => cancel()} className={styles.cancel}>
+						X
+					</div>
 				</div>
+				<form onSubmit={handleSubmit}>
+					<label htmlFor="sound-input" className={styles.customFileUpload}>
+						Upload file(s)
+					</label>
+					<input onChange={handleFilesUpload} type="file" accept="audio/*" name="sound" id="sound-input" required multiple />
+					<div className={styles.filesContainer}>
+						{isFilePicked
+							? selectedFiles.map((file, i) => (
+									<div key={file.name} className={styles.file}>
+										<label htmlFor="name">Name:</label>
+										<input
+											value={names[i]}
+											onChange={(e) => handleNameChange(e, i)}
+											type="text"
+											name="name"
+											id="name"
+										/>
+										<label htmlFor="key">Key:</label>
+										<input
+											required
+											value={keys[i]}
+											onChange={(e) => handleKeyChange(e, i)}
+											type="text"
+											name="key"
+											id="key"
+										/>
+										<div className={styles.hLine}></div>
+									</div>
+							  ))
+							: null}
+						{isFilePicked ? <input type="submit" value="Add" /> : null}
+					</div>
+				</form>
 			</div>
-		);
-	} else {
-		return null;
-	}
+		</div>
+	);
 }

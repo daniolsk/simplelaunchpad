@@ -50,7 +50,11 @@ export default function Home({ defaultButtons }) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const handleClick = (key) => {
+	const handleClick = (key, e) => {
+		if (e.target.id == 'delete-button' || e.target.id == 'delete-button-container') {
+			return;
+		}
+
 		buttons.forEach((btn) => {
 			if (btn.key == key) {
 				btn.sound.currentTime = 0;
@@ -72,6 +76,34 @@ export default function Home({ defaultButtons }) {
 		isAddingButtonDialogRef.current = false;
 	};
 
+	const handleDelete = (key) => {
+		buttons.forEach((btn) => {
+			if (btn.key == key) {
+				btn.sound.pause();
+			}
+		});
+
+		setButtons(buttons.filter((btn) => btn.key != key));
+		buttonsRef.current = buttons.filter((btn) => btn.key != key);
+	};
+
+	const handleCancel = () => {
+		setIsAddingButtonDialog(false);
+		isAddingButtonDialogRef.current = false;
+	};
+
+	const refactorName = (name) => {
+		let limit = 70;
+
+		if (name.length > limit) {
+			name = name.substring(0, limit);
+			name += '...';
+			return name;
+		} else {
+			return name;
+		}
+	};
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -86,17 +118,19 @@ export default function Home({ defaultButtons }) {
 			<div className={styles.launchpadContainer}>
 				<div className={styles.launchpad}>
 					{buttons.map((btn) => (
-						<div className={styles.button} onClick={() => handleClick(btn.key)} key={btn.key}>
+						<div className={styles.button} onClick={(e) => handleClick(btn.key, e)} key={btn.key}>
 							<div className={styles.firstRow}>
 								<div className={styles.key}>{btn.key}</div>
-								<div className={styles.delete}>X</div>
+								<div className={styles.delete} id="delete-button-container" onClick={() => handleDelete(btn.key)}>
+									<img id="delete-button" src="delete.svg" alt="delete" />
+								</div>
 							</div>
-							<div className={styles.name}>{btn.name}</div>
+							<div className={styles.name}>{refactorName(btn.name)}</div>
 						</div>
 					))}
 					<div className={styles.addNewButton} onClick={handleAddButtonDialog}></div>
 				</div>
-				<AddButton isAddingButtonDialog={isAddingButtonDialog} addButtons={addButtons} />
+				{isAddingButtonDialog ? <AddButton cancel={handleCancel} addButtons={addButtons} /> : null}
 			</div>
 			<div className={styles.footer}>
 				<div>Press specific key (or click button) to play a sound | Press Escape to pause</div>
@@ -106,7 +140,7 @@ export default function Home({ defaultButtons }) {
 	);
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
 	return {
 		props: {
 			defaultButtons: [
