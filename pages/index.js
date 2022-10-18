@@ -94,8 +94,12 @@ export default function Home({ defaultButtons }) {
 					))}
 					<div className={styles.addNewButton} onClick={handleAddButtonDialog}></div>
 				</div>
+				<AddButton isAddingButtonDialog={isAddingButtonDialog} addButtons={addButtons} />
 			</div>
-			<AddButton isAddingButtonDialog={isAddingButtonDialog} addButtons={addButtons} />
+			<div className={styles.footer}>
+				<div>Press specific key (or click button) to play a sound | Press Escape to pause</div>
+				<div>Daniel Skowron - Simple launchpad &copy; 2022</div>
+			</div>
 		</div>
 	);
 }

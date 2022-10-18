@@ -4,12 +4,31 @@
 	align-items: center;
 	color: white;
 	text-align: center;
-	margin-bottom: 100px;
+	background-color: rgb(31, 31, 31);
 }
 
 .title h1 {
 	font-weight: bold;
 	font-size: 2.5em;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: space-between;
+}
+
+.footer {
+	width: 100%;
+	height: 35px;
+	font-size: 0.9em;
+	padding: 0 20px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: rgb(31, 31, 31);
 }
 
 .launchpadContainer {
