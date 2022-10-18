@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Home.module.css';
-import AddButton from '../components/addButton';
+import AddButton from '../components/AddButton';
 
 export default function Home({ defaultButtons }) {
 	const [buttons, setButtons] = useState(defaultButtons);
@@ -46,6 +46,8 @@ export default function Home({ defaultButtons }) {
 		return () => {
 			document.removeEventListener('keydown', handleKeyDown);
 		};
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const handleClick = (key) => {

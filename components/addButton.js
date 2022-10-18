@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../styles/addButton.module.css';
 
-export default function addButton({ isAddingButtonDialog, addButtons }) {
+export default function AddButton({ isAddingButtonDialog, addButtons }) {
 	const [selectedFiles, setSelectedFiles] = useState([]);
 	const [isFilePicked, setIsFilePicked] = useState(false);
 
