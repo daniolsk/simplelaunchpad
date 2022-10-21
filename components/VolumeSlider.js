@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import styles from '../styles/VolumeSlider.module.css';
 
 export default function volumeSlider({ setVolumeOnButton, buttonId }) {
 	const [volume, setVolume] = useState(50);
@@ -10,7 +11,7 @@ export default function volumeSlider({ setVolumeOnButton, buttonId }) {
 
 	return (
 		<>
-			<input type="range" value={volume} onChange={handleChange} name="volume" id="volume" />
+			<input type="range" value={volume} onChange={handleChange} name="volume" id="volume" className={styles.volumeSlider} />
 		</>
 	);
 }
