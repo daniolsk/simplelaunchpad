@@ -7,14 +7,15 @@
 	width: 100vw;
 	height: 100vh;
 	background-color: rgba(25, 25, 25, 0.85);
+	color: white;
 }
 
 .dialog {
-	background-color: rgb(119, 119, 119);
-	width: 60vw;
+	background-color: rgb(105, 0, 0);
+	width: 75vw;
 	max-height: 85vh;
 	text-align: center;
-	border-radius: 5px;
+	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
 	padding: 30px;
@@ -75,9 +76,9 @@
 
 .dialog .customFileUpload {
 	border-radius: 5px;
-	border: 3px solid rgb(80, 80, 80);
+	border: 3px solid white;
 	display: inline-block;
-	padding: 6px 12px;
+	padding: 10px 12px;
 	cursor: pointer;
 	margin-bottom: 20px;
 }
@@ -101,5 +102,26 @@
 	margin: 30px 0;
 	height: 3px;
 	width: 90%;
-	background-color: rgb(80, 80, 80);
+	background-color: white;
+}
+
+@media only screen and (max-width: 1199.98px) {
+	.dialog {
+		width: 85vw;
+	}
+	.dialog input[type='text'] {
+		width: 70%;
+	}
+}
+
+@media only screen and (max-width: 991.98px) {
+	.dialog input[type='text'] {
+		width: 80%;
+	}
+}
+
+@media only screen and (max-width: 767.98px) {
+	.dialog input[type='text'] {
+		width: 90%;
+	}
 }

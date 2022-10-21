@@ -89,7 +89,7 @@ export default function AddButton({ cancel, addButtons }) {
 										/>
 										<label htmlFor="key">Key:</label>
 										<input
-											required
+											// required
 											value={keys[i]}
 											onChange={(e) => handleKeyChange(e, i)}
 											type="text"

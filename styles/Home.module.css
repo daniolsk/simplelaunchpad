@@ -32,24 +32,27 @@
 }
 
 .launchpadContainer {
+	padding: 20px 0;
+	overflow-y: auto;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
 	align-items: center;
+	margin: auto 0;
 }
 
 .launchpad {
 	display: grid;
-	grid-template-columns: repeat(4, 200px);
+	grid-template-columns: repeat(5, 210px);
 	gap: 25px;
 }
 
 .button {
-	width: 200px;
-	height: 200px;
+	width: 210px;
+	height: 210px;
 	padding: 13px;
 	border-radius: 5px;
 	font-size: 1.2em;
+	background-color: none;
 	display: flex;
 	border: 7px solid red;
 	flex-direction: column;
@@ -86,13 +89,13 @@
 .name {
 	margin-bottom: 5px;
 	font-weight: bold;
-	font-size: 0.9em;
+	font-size: 0.85em;
 }
 
 .addNewButton {
 	background-color: grey;
-	width: 200px;
-	height: 200px;
+	width: 210px;
+	height: 210px;
 	padding: 13px;
 	border-radius: 5px;
 	font-size: 1.2em;
@@ -107,4 +110,79 @@
 
 .addNewButton:hover {
 	background-color: rgb(105, 105, 105);
+}
+
+@media only screen and (max-width: 1199.98px) {
+	.launchpad {
+		grid-template-columns: repeat(4, 210px);
+		gap: 25px;
+	}
+}
+
+@media only screen and (max-width: 991.98px) {
+	.launchpad {
+		grid-template-columns: repeat(4, 200px);
+		gap: 20px;
+	}
+
+	.button {
+		width: 200px;
+		height: 200px;
+	}
+
+	.addNewButton {
+		width: 200px;
+		height: 200px;
+	}
+
+	.title h1 {
+		font-size: 2em;
+	}
+
+	.firstRow {
+		margin-bottom: 4px;
+	}
+
+	.delete {
+		padding: 3px;
+	}
+
+	.name {
+		font-size: 0.8em;
+	}
+}
+
+@media only screen and (max-width: 923px) {
+	.launchpad {
+		grid-template-columns: repeat(3, 200px);
+		gap: 25px;
+	}
+	.footer {
+		font-size: 0.7em;
+	}
+}
+
+@media only screen and (max-width: 767.98px) {
+	.launchpad {
+		grid-template-columns: repeat(2, 200px);
+		gap: 25px;
+	}
+	.footer {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 575.98px) {
+	.launchpad {
+		grid-template-columns: repeat(2, 195px);
+		gap: 20px;
+	}
+	.button {
+		width: 195px;
+		height: 195px;
+	}
+	.addNewButton {
+		width: 195px;
+		height: 195px;
+	}
 }
