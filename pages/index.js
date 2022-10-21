@@ -176,6 +176,9 @@ export default function Home({ defaultButtons }) {
 				<title>Simple launchpad</title>
 				<meta name="description" content="Simple launchpad - upload your sounds and have fun!" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+				<meta name="keywords" content="launchpad, music, sounds, play"></meta>
+				<meta name="author" content="Daniel Skowron"></meta>
+				<meta charset="UTF-8"></meta>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
