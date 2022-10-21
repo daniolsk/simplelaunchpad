@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/VolumeSlider.module.css';
 
-export default function volumeSlider({ setVolumeOnButton, buttonId }) {
+export default function VolumeSlider({ setVolumeOnButton, buttonId }) {
 	const [volume, setVolume] = useState(50);
 
 	const handleChange = (e) => {
