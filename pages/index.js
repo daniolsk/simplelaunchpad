@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import AddButton from '../components/AddButton';
+import VolumeSlider from '../components/VolumeSlider';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -13,14 +14,12 @@ export default function Home({ defaultButtons }) {
 	const buttonsRef = useRef(buttons);
 	const isAddingButtonDialogRef = useRef(isAddingButtonDialog);
 
-	console.log(buttons);
-
 	useEffect(() => {
 		let tmpButtons = buttons;
 
 		tmpButtons.forEach((btn) => {
 			btn.sound = new Audio(btn.soundSrc);
-			btn.sound.volume = 0.7;
+			btn.sound.volume = 0.5;
 		});
 
 		setButtons(tmpButtons);
@@ -103,7 +102,8 @@ export default function Home({ defaultButtons }) {
 	};
 
 	const handleClick = (id, e) => {
-		if (e.target.id == 'delete-button' || e.target.id == 'delete-button-container') {
+		console.log(e.target.id);
+		if (e.target.id == 'delete-button' || e.target.id == 'delete-button-container' || e.target.id == 'volume') {
 			return;
 		}
 
@@ -151,7 +151,7 @@ export default function Home({ defaultButtons }) {
 	};
 
 	const refactorName = (name) => {
-		let limit = 70;
+		let limit = 40;
 
 		if (name.length > limit) {
 			name = name.substring(0, limit);
@@ -160,6 +160,14 @@ export default function Home({ defaultButtons }) {
 		} else {
 			return name;
 		}
+	};
+
+	const setVolumeOnButton = (id, volume) => {
+		buttons.forEach((btn) => {
+			if (btn.id == id) {
+				btn.sound.volume = volume / 100;
+			}
+		});
 	};
 
 	return (
@@ -188,6 +196,7 @@ export default function Home({ defaultButtons }) {
 								</div>
 							</div>
 							<div className={styles.name}>{refactorName(btn.name)}</div>
+							<VolumeSlider buttonId={btn.id} setVolumeOnButton={setVolumeOnButton} />
 						</div>
 					))}
 					<div className={styles.addNewButton} onClick={handleAddButtonDialog}></div>

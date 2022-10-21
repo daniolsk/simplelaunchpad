@@ -25,7 +25,7 @@ export default function AddButton({ cancel, addButtons }) {
 				playing: false,
 			};
 
-			tmpNewButton.sound.volume = 0.7;
+			tmpNewButton.sound.volume = 0.5;
 
 			buttons.push(tmpNewButton);
 		}
