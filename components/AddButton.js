@@ -75,6 +75,7 @@ export default function AddButton({ cancel, addButtons }) {
 						Upload file(s)
 					</label>
 					<input onChange={handleFilesUpload} type="file" accept="audio/*" name="sound" id="sound-input" required multiple />
+					{isFilePicked ? <input type="submit" value="Add" /> : null}
 					<div className={styles.filesContainer}>
 						{isFilePicked
 							? selectedFiles.map((file, i) => (
@@ -100,7 +101,6 @@ export default function AddButton({ cancel, addButtons }) {
 									</div>
 							  ))
 							: null}
-						{isFilePicked ? <input type="submit" value="Add" /> : null}
 					</div>
 				</form>
 			</div>

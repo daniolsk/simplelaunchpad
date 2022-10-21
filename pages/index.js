@@ -205,7 +205,7 @@ export default function Home({ defaultButtons }) {
 				{isAddingButtonDialog ? <AddButton cancel={handleCancel} addButtons={addButtons} /> : null}
 			</div>
 			<div className={styles.footer}>
-				<div>Press specific key (or click button) to play a sound | Press Escape to pause</div>
+				<div className={styles.instructions}>Press specific key (or click button) to play a sound | Press Escape to pause</div>
 				<div>Daniel Skowron - Simple launchpad &copy; 2022</div>
 			</div>
 		</div>

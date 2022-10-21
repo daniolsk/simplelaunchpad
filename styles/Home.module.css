@@ -167,8 +167,11 @@
 		grid-template-columns: repeat(2, 200px);
 		gap: 25px;
 	}
-	.footer {
+	.instructions {
 		display: none;
+	}
+	.footer {
+		justify-content: center;
 	}
 }
 
