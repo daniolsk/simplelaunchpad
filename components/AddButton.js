@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styles from '../styles/AddButton.module.css';
 
+import { v4 as uuidv4 } from 'uuid';
+
 export default function AddButton({ cancel, addButtons }) {
 	const [selectedFiles, setSelectedFiles] = useState([]);
 	const [isFilePicked, setIsFilePicked] = useState(false);
@@ -15,6 +17,7 @@ export default function AddButton({ cancel, addButtons }) {
 
 		for (let i = 0; i < selectedFiles.length; i++) {
 			let tmpNewButton = {
+				id: uuidv4(),
 				name: names[i],
 				key: keys[i],
 				soundSrc: URL.createObjectURL(selectedFiles[i]),

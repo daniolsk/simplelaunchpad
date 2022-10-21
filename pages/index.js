@@ -4,12 +4,16 @@ import { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import AddButton from '../components/AddButton';
 
+import { v4 as uuidv4 } from 'uuid';
+
 export default function Home({ defaultButtons }) {
 	const [buttons, setButtons] = useState(defaultButtons);
 	const [isAddingButtonDialog, setIsAddingButtonDialog] = useState(false);
 
 	const buttonsRef = useRef(buttons);
 	const isAddingButtonDialogRef = useRef(isAddingButtonDialog);
+
+	console.log(buttons);
 
 	useEffect(() => {
 		let tmpButtons = buttons;
@@ -45,10 +49,10 @@ export default function Home({ defaultButtons }) {
 						btn.sound.play();
 
 						btn.sound.onended = () => {
-							stopPlayingButton(key);
+							stopPlayingButton(btn.id);
 						};
 
-						setPlayingOnButton(key);
+						setPlayingOnButton(btn.id);
 					}
 				});
 			}
@@ -63,11 +67,11 @@ export default function Home({ defaultButtons }) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const setPlayingOnButton = (key) => {
+	const setPlayingOnButton = (id) => {
 		let tmpButtons = [...buttonsRef.current];
 
 		tmpButtons.forEach((btn) => {
-			if (btn.key == key) {
+			if (btn.id == id) {
 				btn.playing = true;
 			}
 		});
@@ -75,11 +79,11 @@ export default function Home({ defaultButtons }) {
 		setButtons([...tmpButtons]);
 		buttonsRef.current = [...tmpButtons];
 	};
-	const stopPlayingButton = (key) => {
+	const stopPlayingButton = (id) => {
 		let tmpButtons = [...buttonsRef.current];
 
 		tmpButtons.forEach((btn) => {
-			if (btn.key == key) {
+			if (btn.id == id) {
 				btn.playing = false;
 			}
 		});
@@ -98,21 +102,21 @@ export default function Home({ defaultButtons }) {
 		buttonsRef.current = [...tmpButtons];
 	};
 
-	const handleClick = (key, e) => {
+	const handleClick = (id, e) => {
 		if (e.target.id == 'delete-button' || e.target.id == 'delete-button-container') {
 			return;
 		}
 
 		buttons.forEach((btn) => {
-			if (btn.key == key) {
+			if (btn.id == id) {
 				btn.sound.currentTime = 0;
 				btn.sound.play();
 
 				btn.sound.onended = () => {
-					stopPlayingButton(key);
+					stopPlayingButton(id);
 				};
 
-				setPlayingOnButton(key);
+				setPlayingOnButton(id);
 			}
 		});
 	};
@@ -130,15 +134,15 @@ export default function Home({ defaultButtons }) {
 		isAddingButtonDialogRef.current = false;
 	};
 
-	const handleDelete = (key) => {
+	const handleDelete = (id) => {
 		buttons.forEach((btn) => {
-			if (btn.key == key) {
+			if (btn.id == id) {
 				btn.sound.pause();
 			}
 		});
 
-		setButtons(buttons.filter((btn) => btn.key != key));
-		buttonsRef.current = buttons.filter((btn) => btn.key != key);
+		setButtons(buttons.filter((btn) => btn.id != id));
+		buttonsRef.current = buttons.filter((btn) => btn.id != id);
 	};
 
 	const handleCancel = () => {
@@ -174,12 +178,12 @@ export default function Home({ defaultButtons }) {
 					{buttons.map((btn) => (
 						<div
 							className={`${styles.button} ${btn.playing ? styles.playing : null}`}
-							onClick={(e) => handleClick(btn.key, e)}
-							key={btn.key}
+							onClick={(e) => handleClick(btn.id, e)}
+							key={btn.id}
 						>
 							<div className={styles.firstRow}>
 								<div className={styles.key}>{btn.key}</div>
-								<div className={styles.delete} id="delete-button-container" onClick={() => handleDelete(btn.key)}>
+								<div className={styles.delete} id="delete-button-container" onClick={() => handleDelete(btn.id)}>
 									<Image width={22} height={22} id="delete-button" src="/delete.svg" alt="delete" />
 								</div>
 							</div>
@@ -202,10 +206,10 @@ export async function getServerSideProps() {
 	return {
 		props: {
 			defaultButtons: [
-				{ name: 'Clap', key: 'q', soundSrc: '/default_sounds/clap.wav', playing: false },
-				{ name: 'HiHat', key: 'w', soundSrc: '/default_sounds/hihat.wav', playing: false },
-				{ name: 'Kick', key: 'e', soundSrc: '/default_sounds/kick.wav', playing: false },
-				{ name: 'Snare', key: 'r', soundSrc: '/default_sounds/snare.wav', playing: false },
+				{ id: uuidv4(), name: 'Clap', key: 'q', soundSrc: '/default_sounds/clap.wav', playing: false },
+				{ id: uuidv4(), name: 'HiHat', key: 'w', soundSrc: '/default_sounds/hihat.wav', playing: false },
+				{ id: uuidv4(), name: 'Kick', key: 'e', soundSrc: '/default_sounds/kick.wav', playing: false },
+				{ id: uuidv4(), name: 'Snare', key: 'r', soundSrc: '/default_sounds/snare.wav', playing: false },
 			],
 		},
 	};
