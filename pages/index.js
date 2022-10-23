@@ -178,7 +178,7 @@ export default function Home({ defaultButtons }) {
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 				<meta name="keywords" content="launchpad, music, sounds, play"></meta>
 				<meta name="author" content="Daniel Skowron"></meta>
-				<meta charset="UTF-8"></meta>
+				<meta charSet="UTF-8"></meta>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
@@ -190,7 +190,12 @@ export default function Home({ defaultButtons }) {
 					{buttons.map((btn) => (
 						<div
 							className={`${styles.button} ${btn.playing ? styles.playing : null}`}
-							onClick={(e) => handleClick(btn.id, e)}
+							onMouseUp={(e) => handleClick(btn.id, e)}
+							onTouchEnd={(e) => {
+								e.stopPropagation();
+								e.preventDefault();
+								handleClick(btn.id, e);
+							}}
 							key={btn.id}
 						>
 							<div className={styles.firstRow}>
