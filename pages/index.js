@@ -240,21 +240,30 @@ export default function Home({ defaultButtons }) {
 							<button
 								className={styles.openColorPickerButton}
 								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
 									handleOpenColorPicker(btn.id);
 								}}
 							>
 								Pick color
 							</button>
 							{btn.displayColorPicker ? (
-								<GithubPicker
-									id="color-picker"
-									width="100"
-									onChangeComplete={(color) => {
-										handleColorChange(btn.id, color);
+								<div
+									onClick={(e) => {
+										e.preventDefault();
+										e.stopPropagation();
 									}}
-									colors={['#B80000', '#DB3E00', '#FCCB00', '#008B02', '#006B76', '#1273DE']}
-									triangle="top-left"
-								/>
+								>
+									<GithubPicker
+										id="color-picker"
+										width="100"
+										onChangeComplete={(color) => {
+											handleColorChange(btn.id, color);
+										}}
+										colors={['#B80000', '#DB3E00', '#FCCB00', '#008B02', '#006B76', '#1273DE']}
+										triangle="top-left"
+									/>
+								</div>
 							) : null}
 						</div>
 					))}
