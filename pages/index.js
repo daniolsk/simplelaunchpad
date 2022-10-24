@@ -5,11 +5,13 @@ import styles from '../styles/Home.module.css';
 import AddButton from '../components/AddButton';
 import VolumeSlider from '../components/VolumeSlider';
 
+import { GithubPicker } from 'react-color';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Home({ defaultButtons }) {
 	const [buttons, setButtons] = useState(defaultButtons);
 	const [isAddingButtonDialog, setIsAddingButtonDialog] = useState(false);
+	const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
 	const buttonsRef = useRef(buttons);
 	const isAddingButtonDialogRef = useRef(isAddingButtonDialog);
@@ -102,8 +104,12 @@ export default function Home({ defaultButtons }) {
 	};
 
 	const handleClick = (id, e) => {
-		console.log(e.target.id);
-		if (e.target.id == 'delete-button' || e.target.id == 'delete-button-container' || e.target.id == 'volume') {
+		if (
+			e.target.id == 'delete-button' ||
+			e.target.id == 'delete-button-container' ||
+			e.target.id == 'volume' ||
+			e.target.id == 'color-picker'
+		) {
 			return;
 		}
 
@@ -170,6 +176,31 @@ export default function Home({ defaultButtons }) {
 		});
 	};
 
+	const handleColorChange = (id, color) => {
+		let btns = [...buttons];
+
+		btns.forEach((btn) => {
+			if (btn.id == id) {
+				btn.color = color.hex;
+				btn.displayColorPicker = false;
+			}
+		});
+
+		setButtons([...btns]);
+	};
+
+	const handleOpenColorPicker = (id) => {
+		let btns = [...buttons];
+
+		btns.forEach((btn) => {
+			if (btn.id == id) {
+				btn.displayColorPicker = !btn.displayColorPicker;
+			}
+		});
+
+		setButtons([...btns]);
+	};
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -189,13 +220,13 @@ export default function Home({ defaultButtons }) {
 				<div className={styles.launchpad}>
 					{buttons.map((btn) => (
 						<div
-							className={`${styles.button} ${btn.playing ? styles.playing : null}`}
-							onMouseUp={(e) => handleClick(btn.id, e)}
-							onTouchEnd={(e) => {
-								e.stopPropagation();
-								e.preventDefault();
-								handleClick(btn.id, e);
+							className={styles.button}
+							id="button"
+							style={{
+								border: `7px solid ${btn.color}`,
+								backgroundColor: `${btn.playing ? btn.color : 'rgb(39, 39, 39)'}`,
 							}}
+							onClick={(e) => handleClick(btn.id, e)}
 							key={btn.id}
 						>
 							<div className={styles.firstRow}>
@@ -206,6 +237,25 @@ export default function Home({ defaultButtons }) {
 							</div>
 							<div className={styles.name}>{refactorName(btn.name)}</div>
 							<VolumeSlider buttonId={btn.id} setVolumeOnButton={setVolumeOnButton} />
+							<button
+								className={styles.openColorPickerButton}
+								onClick={(e) => {
+									handleOpenColorPicker(btn.id);
+								}}
+							>
+								Pick color
+							</button>
+							{btn.displayColorPicker ? (
+								<GithubPicker
+									id="color-picker"
+									width="100"
+									onChangeComplete={(color) => {
+										handleColorChange(btn.id, color);
+									}}
+									colors={['#B80000', '#DB3E00', '#FCCB00', '#008B02', '#006B76', '#1273DE']}
+									triangle="top-left"
+								/>
+							) : null}
 						</div>
 					))}
 					<div className={styles.addNewButton} onClick={handleAddButtonDialog}></div>
@@ -224,10 +274,42 @@ export async function getServerSideProps() {
 	return {
 		props: {
 			defaultButtons: [
-				{ id: uuidv4(), name: 'Clap', key: 'q', soundSrc: '/default_sounds/clap.wav', playing: false },
-				{ id: uuidv4(), name: 'HiHat', key: 'w', soundSrc: '/default_sounds/hihat.wav', playing: false },
-				{ id: uuidv4(), name: 'Kick', key: 'e', soundSrc: '/default_sounds/kick.wav', playing: false },
-				{ id: uuidv4(), name: 'Snare', key: 'r', soundSrc: '/default_sounds/snare.wav', playing: false },
+				{
+					id: uuidv4(),
+					name: 'Clap',
+					key: 'q',
+					soundSrc: '/default_sounds/clap.wav',
+					playing: false,
+					color: 'red',
+					displayColorPicker: false,
+				},
+				{
+					id: uuidv4(),
+					name: 'HiHat',
+					key: 'w',
+					soundSrc: '/default_sounds/hihat.wav',
+					playing: false,
+					color: 'green',
+					displayColorPicker: false,
+				},
+				{
+					id: uuidv4(),
+					name: 'Kick',
+					key: 'e',
+					soundSrc: '/default_sounds/kick.wav',
+					playing: false,
+					color: 'blue',
+					displayColorPicker: false,
+				},
+				{
+					id: uuidv4(),
+					name: 'Snare',
+					key: 'r',
+					soundSrc: '/default_sounds/snare.wav',
+					playing: false,
+					color: 'yellow',
+					displayColorPicker: false,
+				},
 			],
 		},
 	};

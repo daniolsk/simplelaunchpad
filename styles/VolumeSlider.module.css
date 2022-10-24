@@ -1,3 +1,7 @@
 .volumeSlider:focus-visible {
 	outline: none;
 }
+
+.volumeSlider {
+	margin-bottom: 10px;
+}

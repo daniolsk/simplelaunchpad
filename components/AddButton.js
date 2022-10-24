@@ -20,6 +20,8 @@ export default function AddButton({ cancel, addButtons }) {
 				id: uuidv4(),
 				name: names[i],
 				key: keys[i],
+				color: 'red',
+				displayColorPicker: false,
 				soundSrc: URL.createObjectURL(selectedFiles[i]),
 				sound: new Audio(URL.createObjectURL(selectedFiles[i])),
 				playing: false,
