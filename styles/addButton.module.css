@@ -11,7 +11,8 @@
 }
 
 .dialog {
-	background-color: rgb(105, 0, 0);
+	background-color: rgb(39, 39, 39);
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	width: 75vw;
 	max-height: 85vh;
 	text-align: center;
@@ -36,18 +37,20 @@
 }
 
 .dialog input {
-	margin-bottom: 15px;
+	margin-bottom: 12px;
 }
 
 .dialog label {
-	font-size: 1em;
-	margin-bottom: 5px;
+	font-size: 0.9em;
+	margin-bottom: 6px;
+	color: rgba(255, 255, 255, 0.6);
 }
 
 .dialog input[type='text'] {
-	padding: 6px 12px;
+	padding: 10px 12px;
 	font-size: 1em;
-	width: 60%;
+	width: 80%;
+	border-radius: 10px;
 }
 
 .row {
@@ -71,12 +74,16 @@
 .dialog input[type='submit'] {
 	font-size: 1.2em;
 	border-radius: 5px;
-	background-color: rgb(219, 0, 0);
+	background-color: rgb(204, 0, 0);
 	color: white;
-	border: none;
+	border: 3px solid rgb(73, 0, 0);
 	margin-bottom: 20px;
-	padding: 6px 12px;
+	padding: 10px 12px;
 	cursor: pointer;
+}
+
+.dialog input[type='submit']:hover {
+	background-color: rgb(240, 0, 0);
 }
 
 .dialog .customFileUpload {
@@ -86,6 +93,7 @@
 	padding: 10px 12px;
 	cursor: pointer;
 	margin-bottom: 20px;
+	color: white;
 }
 
 .dialog .customFileUpload:hover {
@@ -98,24 +106,31 @@
 
 .dialog .file {
 	display: flex;
+	padding: 20px;
+}
+
+.dialog .file .icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 4;
+	border-right: 1px solid white;
+}
+
+.dialog .file .fileDetails {
+	display: flex;
+	flex: 9;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.hLine {
-	margin: 30px 0;
-	height: 3px;
-	width: 90%;
-	background-color: white;
-}
-
 @media only screen and (max-width: 1199.98px) {
+	.dialog .file .icon {
+		flex: 3;
+	}
 	.dialog {
 		width: 85vw;
-	}
-	.dialog input[type='text'] {
-		width: 70%;
 	}
 }
 
@@ -126,6 +141,9 @@
 }
 
 @media only screen and (max-width: 767.98px) {
+	.dialog .file .icon {
+		display: none;
+	}
 	.dialog input[type='text'] {
 		width: 90%;
 	}

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styles from '../styles/AddButton.module.css';
 
+import Image from 'next/image';
+
 import { v4 as uuidv4 } from 'uuid';
 
 export default function AddButton({ cancel, addButtons }) {
@@ -81,26 +83,33 @@ export default function AddButton({ cancel, addButtons }) {
 					<div className={styles.filesContainer}>
 						{isFilePicked
 							? selectedFiles.map((file, i) => (
-									<div key={file.name} className={styles.file}>
-										<label htmlFor="name">Name:</label>
-										<input
-											value={names[i]}
-											onChange={(e) => handleNameChange(e, i)}
-											type="text"
-											name="name"
-											id="name"
-										/>
-										<label htmlFor="key">Key:</label>
-										<input
-											// required
-											value={keys[i]}
-											onChange={(e) => handleKeyChange(e, i)}
-											type="text"
-											name="key"
-											id="key"
-										/>
+									<>
+										<div key={file.name} className={styles.file}>
+											<div className={styles.icon}>
+												<Image width={70} height={70} id="delete-button" src="/music-file.svg" alt="delete" />
+											</div>
+											<div className={styles.fileDetails}>
+												<label htmlFor="name">Name:</label>
+												<input
+													value={names[i]}
+													onChange={(e) => handleNameChange(e, i)}
+													type="text"
+													name="name"
+													id="name"
+												/>
+												<label htmlFor="key">Key:</label>
+												<input
+													// required
+													value={keys[i]}
+													onChange={(e) => handleKeyChange(e, i)}
+													type="text"
+													name="key"
+													id="key"
+												/>
+											</div>
+										</div>
 										<div className={styles.hLine}></div>
-									</div>
+									</>
 							  ))
 							: null}
 					</div>
