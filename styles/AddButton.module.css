@@ -32,7 +32,7 @@
 .filesContainer {
 	align-items: center;
 	overflow-y: scroll;
-	max-height: 55vh;
+	max-height: 45vh;
 	width: 100%;
 }
 
