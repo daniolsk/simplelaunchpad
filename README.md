@@ -10,9 +10,10 @@ Upload your own sounds, set key bindings and play!
 ## Development
 
 This is next.js app bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-First, run the development server:
+First, install depedencies and run the development server:
 
 ```bash
+npm install
 npm run dev
 ```
 
